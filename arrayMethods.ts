@@ -1,9 +1,10 @@
+type MapCallback<T> = (currentEl: T, i: number, array: T[]) => T
 // mapFn
-export function mapFn<T>(arr: T[], callback: Function): T[] {
+export function mapFn<T>(arr: T[], callback: MapCallback<T>): T[] {
     
       const newArray: T[] = [];
       for (let i = 0; i < arr.length; i++) {
-        let newElement = callback(arr[i], i, arr);
+        let newElement: T = callback(arr[i], i, arr);
         newArray.push(newElement);
       }
       return newArray;
@@ -12,8 +13,8 @@ export function mapFn<T>(arr: T[], callback: Function): T[] {
   console.log(`mapFn: ${mapFn([7, 8, 9, 10, 12, 34, 2], a => a - 2)}`);
   
   // filterFn
-  
-  export function filterFn<T>(arr: T[], callback: Function): T[] {
+  type BooleanCallback<T> = (currentEl: T, i: number, arr: T[]) => boolean;
+  export function filterFn<T>(arr: T[], callback: BooleanCallback<T>): T[] {
     
     const filteredArray: T[] = [];
     for (let i = 0; i < arr.length; i++) {
@@ -28,7 +29,7 @@ export function mapFn<T>(arr: T[], callback: Function): T[] {
   
   // everyFn
   
-  export function everyFn<T>(arr: T[], callback: Function): boolean {
+  export function everyFn<T>(arr: T[], callback: BooleanCallback<T>): boolean {
   
     for (let i = 0; i < arr.length; i++) {
       if (!callback(arr[i], i, arr)) {
@@ -42,7 +43,9 @@ export function mapFn<T>(arr: T[], callback: Function): T[] {
   
   // reduceFn
   
-  export function reduceFn<T>(arr: T[], callback: Function, initial ?: T): T {
+type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
+
+  export function reduceFn<T>(arr: T[], callback: ReduceCallback<T>, initial ?: T): T {
       let prevVal: T;
   
       if (typeof initial !== 'undefined') {
@@ -78,7 +81,7 @@ export function mapFn<T>(arr: T[], callback: Function): T[] {
   
   // reduceRightFn
   
-  export function reduceRightFn<T>(arr: T[], callback: Function, initial ?: T): T {
+  export function reduceRightFn<T>(arr: T[], callback: ReduceCallback<T>, initial ?: T): T {
   const reversedArray: T[] = arr.reverse();
   return reduceFn(reversedArray, callback, initial);
   }
@@ -87,7 +90,7 @@ export function mapFn<T>(arr: T[], callback: Function): T[] {
   
   // someFn
   
-  export function someFn<T>(arr: T[], callback: Function): boolean {
+  export function someFn<T>(arr: T[], callback: BooleanCallback<T>): boolean {
     for (let i = 0; i < arr.length; i++) {
       if (callback(arr[i], i, arr)) {
         return true;

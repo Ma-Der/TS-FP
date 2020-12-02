@@ -150,10 +150,12 @@ const data = [
           }
         }
       if (element instanceof Array) {
-        element.forEach(() => filterWith(element, filter));  
+        element.forEach(subEl => {
+          if(subEl instanceof Array) return filterWith(subEl, filter)
+        });  
       }    
       
-      if (element instanceof Object) {
+      if (Object.prototype.toString.call(element) === "[object Object]") {
         return Object.keys(element).find((key) => search(element[key]));
       }
     }

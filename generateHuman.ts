@@ -18,7 +18,7 @@ const surnames = 'Nowak Olejniczak Pająk Matuszewski Romanowski Kasprzak Świą
     country: string;
   }
   
-  export function generateHuman(): string {
+  export function generateHuman(): Human {
     function randomNumber(min: number, max: number): number {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
@@ -47,7 +47,7 @@ const surnames = 'Nowak Olejniczak Pająk Matuszewski Romanowski Kasprzak Świą
       phoneNr: randomPhoneNumber([]),
       country: getRandomElementFromArray(countries),
     };
-    return JSON.stringify(human);
+    return human;
   }
   
-  console.log(`generateHuman: ${generateHuman()}`);
+  console.log(`generateHuman: ${JSON.stringify(generateHuman())}`);

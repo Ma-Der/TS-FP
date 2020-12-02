@@ -1,13 +1,14 @@
-function findPhraseInArray(array: string[], phrase: string): string[][] {
+let result: [string, number];
+function findPhraseInArray(array: string[], phrase: string): Array<typeof result> {
     if(!(phrase.length > 2)) throw new Error("Phrase must be more than 2 letters.");
   
-    
-    const found = array.reduce((acc: string[][], currentValue: string, index: number) => {
+    const found = array.reduce((acc, currentValue, index) => {
       if (currentValue.toLowerCase().includes(phrase.toLowerCase())) {
-        acc.push([`Value: ${currentValue}`, ` index: , ${index}`]);
+        result = [currentValue, index];
+        acc.push(result);
       }
       return acc;
-    }, []);
+    }, Array<typeof result>());
     if (found.length === 0) throw new Error('Nothing found.');
     return found; 
 } 

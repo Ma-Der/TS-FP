@@ -22,7 +22,7 @@ function generateArrayOfArrays(howManyArrays: number = 10, howManyNumbers: numbe
     if(isNaN(howManyArrays)) throw new Error('All arguments must be numbers.');
     if(!(howManyArrays > 0)) throw new Error("1st parameter must be more than zero.");
      
-    const newArray: number[][] = new Array(howManyArrays).fill(null).map(() => generateArrayWithRandomNumbers(howManyNumbers, min, max));
+    const newArray: Array<number[]> = new Array(howManyArrays).fill(null).map(() => generateArrayWithRandomNumbers(howManyNumbers, min, max));
     return newArray;
 }
 

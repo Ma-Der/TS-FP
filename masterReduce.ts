@@ -1,11 +1,15 @@
-function mapFnR<T>(array: T[], callback: Function): T[] {
+type MapCallback<T> = (currentEl: T, i: number, array: T[]) => T
+
+function mapFnR<T>(array: T[], callback: MapCallback<T>): T[] {
   
     return array.reduce((newArray: T[], element, index, arr) => {
         return [...newArray, callback(element, index, arr)];
     }, []);
 }
-  
-function filterFnR<T>(array: T[], callback: Function): T[] {
+ 
+type BooleanCallback<T> = (currentEl: T, i: number, arr: T[]) => boolean;
+
+function filterFnR<T>(array: T[], callback: BooleanCallback<T>): T[] {
   
     return array.reduce((newArray: T[], element, index, arr) =>{
           if(callback(element, index, arr)) {
@@ -15,9 +19,9 @@ function filterFnR<T>(array: T[], callback: Function): T[] {
       }, []);
 }
   
-function everyFnR<T>(array: T[], callback: Function): boolean {
+function everyFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
   
-    return [...array].reduce((accumulator: boolean, currElement, index, arr) => {
+    const result = [...array].reduce((acc, currElement, index, arr) => {
       
       if (!callback(currElement, index, arr)) {
         arr.splice(index);
@@ -25,18 +29,22 @@ function everyFnR<T>(array: T[], callback: Function): boolean {
       }
       
       return true;
-    }, true);
+    }, false);
+
+    return result;
 }
   
-function someFnR<T>(array: T[], callback: Function): boolean {
+function someFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
   
-    return [...array].reduce((accumulator: boolean, currElement, index, arr) => {
-      if (callback(accumulator, index, arr)) {
+    const result = [...array].reduce((acc, currElement, index, arr) => {
+      if (callback(currElement, index, arr)) {
         arr.splice(index);
         return true;
       } 
       
       return false;
-    }, false);
+    }, true);
+
+    return result;
 }
   

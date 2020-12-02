@@ -5,15 +5,16 @@ const randomNumber = (a: number, b: number): number => {
 }
 
 
-const aggregateIntoChunks = (array: string[]): string[][] => {
+
+function aggregateIntoChunks<T>(array: T[]): Array<T[]> {
   
-    const cpyArr: string[] = [...array];
+    const inputClone: T[] = [...array];
   
-    let newArray: string[][] = [];
+    let newArray: Array<T[]> = [];
     let size = randomNumber(4, 7);
   
-    while(cpyArr.length > 0) {
-      newArray.push(cpyArr.splice(0, size));
+    while(inputClone.length > 0) {
+      newArray.push(inputClone.splice(0, size));
       size = randomNumber(4, 7);
     }
     

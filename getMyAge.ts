@@ -16,7 +16,7 @@ function getMyAge(input: AgeInput): number {
       case (typeof input === 'string'):
         if((typeof input === 'string')) {
             if(!(input.length > 0)) throw new Error("Empty string.");
-            parsedValue = +input;
+            parsedValue = parseInt(input);
         }
         break;
   
