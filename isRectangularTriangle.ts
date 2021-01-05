@@ -1,4 +1,4 @@
-function isRectangularTriangle(x1: number, x2: number , x3: number): boolean {
+export function isRectangularTriangle(x1: number, x2: number , x3: number): boolean {
 
     if (isNaN(x1*x2*x3)) throw new Error('One of the variables is not a number.');
     

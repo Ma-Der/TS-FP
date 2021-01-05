@@ -1,4 +1,4 @@
-function generateArrayWithRandomNumbers(howManyNumbers: number = 10, min: number = 1, max: number = 10) {
+export function generateArrayWithRandomNumbers(howManyNumbers: number = 10, min: number = 1, max: number = 10): number[] {
 
     const argumentsMultiply = howManyNumbers * min * max;
     if (isNaN(argumentsMultiply)) throw new Error("All arguments must be numbers.");
@@ -17,7 +17,7 @@ function generateArrayWithRandomNumbers(howManyNumbers: number = 10, min: number
       return newArray;
   }
   
-function generateArrayOfArrays(howManyArrays: number = 10, howManyNumbers: number = 10, min: number = 1, max: number = 10) {
+export function generateArrayOfArrays(howManyArrays: number = 10, howManyNumbers: number = 10, min: number = 1, max: number = 10) {
     
     if(isNaN(howManyArrays)) throw new Error('All arguments must be numbers.');
     if(!(howManyArrays > 0)) throw new Error("1st parameter must be more than zero.");
@@ -26,5 +26,7 @@ function generateArrayOfArrays(howManyArrays: number = 10, howManyNumbers: numbe
     return newArray;
 }
 
-console.log(`generateArrayWithRandomNumbers: ${generateArrayWithRandomNumbers(5, 5, 100)}`);
-console.log(`generateArrayOfArrays: ${generateArrayOfArrays(2, 5, 5, 100)}`);
+//console.log(`generateArrayWithRandomNumbers: ${generateArrayWithRandomNumbers(5, 5, 100)}`);
+//console.log(`generateArrayOfArrays: ${generateArrayOfArrays(2, 5, 5, 100)}`);
+
+console.log(generateArrayOfArrays(2, 2, 1, 1))

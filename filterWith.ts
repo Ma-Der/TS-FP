@@ -134,10 +134,10 @@ const data = [
     },
   ];
 
-  function filterWith<T>(arr: T[], filter: string | number): T[] {
-  
+  export function filterWith<T>(arr: T[], filter: string | number): T[] {
+
     if (!(filter.toString().length > 2)) return [];
-    
+
     function search(element: T) {
       if (typeof element === 'string') {
        if (element.toLowerCase().includes(filter.toString().toLowerCase())) {
@@ -150,15 +150,15 @@ const data = [
           }
         }
       if (element instanceof Array) {
-        element.forEach(subEl => {
-          if(subEl instanceof Array) return filterWith(subEl, filter)
-        });  
+          for(const value in element) {
+              return search(element[value])
+          }
       }    
-      
-      if (Object.prototype.toString.call(element) === "[object Object]") {
-        return Object.keys(element).find((key) => search(element[key]));
+
+      if (element instanceof ({}).constructor) {
+        return Object.keys(element).some((key) => search(element[key]));
       }
     }
     return arr.filter(search);
   }
-  console.log(`filterWith: ${JSON.stringify(filterWith(data, 2231))}`);
+  //console.log(`filterWith: ${JSON.stringify(filterWith(data, "acevedo"))}`);

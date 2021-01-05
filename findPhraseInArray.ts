@@ -1,5 +1,5 @@
 let result: [string, number];
-function findPhraseInArray(array: string[], phrase: string): Array<typeof result> {
+export function findPhraseInArray(array: string[], phrase: string): Array<typeof result> {
     if(!(phrase.length > 2)) throw new Error("Phrase must be more than 2 letters.");
   
     const found = array.reduce((acc, currentValue, index) => {
@@ -17,4 +17,4 @@ function findPhraseInArray(array: string[], phrase: string): Array<typeof result
     ' '
   );
 
-  console.log(`findPhrase: ${findPhraseInArray(inputData, 'wak')}`);
+  //console.log(`findPhrase: ${findPhraseInArray(inputData, 'wak')}`);

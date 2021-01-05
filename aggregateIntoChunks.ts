@@ -6,8 +6,10 @@ const randomNumber = (a: number, b: number): number => {
 
 
 
-function aggregateIntoChunks<T>(array: T[]): Array<T[]> {
+export function aggregateIntoChunks<T>(array: T[]): Array<T[]> {
   
+    if(array.length < 4) throw new Error("Array needs to have at least 4 elements.");
+
     const inputClone: T[] = [...array];
   
     let newArray: Array<T[]> = [];
@@ -26,4 +28,4 @@ function aggregateIntoChunks<T>(array: T[]): Array<T[]> {
 
 
   const alphabet = 'abcdefghijklmnoprstuwxyz'.split('');
-  console.log(aggregateIntoChunks(alphabet));
+  //console.log(aggregateIntoChunks("ssdsds"));

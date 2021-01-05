@@ -10,7 +10,7 @@ export function mapFn<T>(arr: T[], callback: MapCallback<T>): T[] {
       return newArray;
   }
 
-  console.log(`mapFn: ${mapFn([7, 8, 9, 10, 12, 34, 2], a => a - 2)}`);
+  //console.log(`mapFn: ${mapFn([7, 8, 9, 10, 12, 34, 2], a => a - 2)}`);
   
   // filterFn
   type BooleanCallback<T> = (currentEl: T, i: number, arr: T[]) => boolean;
@@ -25,7 +25,7 @@ export function mapFn<T>(arr: T[], callback: MapCallback<T>): T[] {
     return filteredArray;
   }
 
-  console.log(`filterFn: ${filterFn([11,23,45,56,67,87,90], p => p > 50)}`);
+  //console.log(`filterFn: ${filterFn([11,23,45,56,67,87,90], p => p > 50)}`);
   
   // everyFn
   
@@ -39,7 +39,7 @@ export function mapFn<T>(arr: T[], callback: MapCallback<T>): T[] {
     return true;
   }
 
-  console.log(`everyFn: ${everyFn([1, 2, 3, 4, 5, 6], t => t === 5)}`);
+  //console.log(`everyFn: ${everyFn([1, 2, 3, 4, 5, 6], t => t === 5)}`);
   
   // reduceFn
   
@@ -77,7 +77,7 @@ type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
       }
   }
 
-  console.log(`reduceFn: ${reduceFn([1,2,3,4,5,6,7,8,9], (d, e) => d = d + e)}`)
+  //console.log(`reduceFn: ${reduceFn([1,2,3,4,5,6,7,8,9], (d, e) => d = d + e)}`)
   
   // reduceRightFn
   
@@ -86,7 +86,7 @@ type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
   return reduceFn(reversedArray, callback, initial);
   }
 
-  console.log(`reduceRightFn: ${reduceRightFn([1,2,3,4,5,6,7,8,9], (d, e) => d = d - e)}`)
+  //console.log(`reduceRightFn: ${reduceRightFn([1,2,3,4,5,6,7,8,9], (d, e) => d = d - e)}`)
   
   // someFn
   
@@ -99,5 +99,5 @@ type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
     return false;
   }
 
-  console.log(`someFn: ${someFn([1,2,3,4,5,6,7,8,9], p => typeof p === 'number')}`)
+  //console.log(`someFn: ${someFn([1,2,3,4,5,6,7,8,9], p => typeof p === 'number')}`)
   

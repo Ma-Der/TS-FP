@@ -1,6 +1,6 @@
 type MapCallback<T> = (currentEl: T, i: number, array: T[]) => T
 
-function mapFnR<T>(array: T[], callback: MapCallback<T>): T[] {
+export function mapFnR<T>(array: T[], callback: MapCallback<T>): T[]  {
   
     return array.reduce((newArray: T[], element, index, arr) => {
         return [...newArray, callback(element, index, arr)];
@@ -9,7 +9,7 @@ function mapFnR<T>(array: T[], callback: MapCallback<T>): T[] {
  
 type BooleanCallback<T> = (currentEl: T, i: number, arr: T[]) => boolean;
 
-function filterFnR<T>(array: T[], callback: BooleanCallback<T>): T[] {
+export function filterFnR<T>(array: T[], callback: BooleanCallback<T>): T[] {
   
     return array.reduce((newArray: T[], element, index, arr) =>{
           if(callback(element, index, arr)) {
@@ -19,7 +19,7 @@ function filterFnR<T>(array: T[], callback: BooleanCallback<T>): T[] {
       }, []);
 }
   
-function everyFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
+export function everyFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
   
     const result = [...array].reduce((acc, currElement, index, arr) => {
       
@@ -34,7 +34,7 @@ function everyFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
     return result;
 }
   
-function someFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
+export function someFnR<T>(array: T[], callback: BooleanCallback<T>): boolean {
   
     const result = [...array].reduce((acc, currElement, index, arr) => {
       if (callback(currElement, index, arr)) {

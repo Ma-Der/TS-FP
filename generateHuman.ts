@@ -50,4 +50,4 @@ const surnames = 'Nowak Olejniczak Pająk Matuszewski Romanowski Kasprzak Świą
     return human;
   }
   
-  console.log(`generateHuman: ${JSON.stringify(generateHuman())}`);
+  //console.log(`generateHuman: ${JSON.stringify(generateHuman())}`);
