@@ -1,4 +1,4 @@
-const data = [ 
+export const data = [ 
     {
       _id: '5e985a07feddae7617ac44f6',
       age: 24,
@@ -136,6 +136,7 @@ const data = [
 
   export function filterWith<T>(arr: T[], filter: string | number): T[] {
 
+    if(arr.length === 0) throw new Error('There is nothing too search. Array is empty.');
     if (!(filter.toString().length > 2)) return [];
 
     function search(element: T) {
@@ -150,9 +151,11 @@ const data = [
           }
         }
       if (element instanceof Array) {
-          for(const value in element) {
-              return search(element[value])
-          }
+        element.forEach(key => {
+          if(element[key] instanceof Array) {
+            return filterWith(element[key], filter);
+         }
+        });  
       }    
 
       if (element instanceof ({}).constructor) {

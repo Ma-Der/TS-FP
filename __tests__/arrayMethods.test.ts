@@ -1,117 +1,189 @@
 import { mapFn, filterFn, everyFn, reduceFn, reduceRightFn, someFn} from '../arrayMethods';
 
+//mapFn
 
-    // goodArguments:
-        const arrayOfStrings = ["one", "two", "three", "four"]
-        const arrayOfNumbers = [1,2, 3, 4]
-        const arrayOfObjects = [{name: "Bob"}, {name: "Kelly"}, {name: "Chance"}, {name: "George"}]
-        const arrayOfBooleans = [true, true, false, true, false, false]
-        const emptyArray = [];
-   // badArguments: 
-        const string = "sometimes I like something else"
-        const numbers = 34
-        const object = {name: "Cindy", surname: "Dunno"}
-        const boolean = true
+describe("mapFn function should work properly", () => {
+  test("when returns new array", () => {
+    const exampleInput = [1, 2, 3, 4, 5, 6, 7];
+    const properResult = mapFn(exampleInput, (a) => a + 's');
+    expect(exampleInput).not.toEqual(properResult);
+  });
 
-        // Wszystkie metody potrzebują array'i jako argumentów oraz callbacku
-        // Żaden inny argument nie przechodzi testów, TypeScript pilnuje typów i wyrzuca błędy - zachowanie porządane
+  test('when returns array with the same number of elements', () => {
+    const exampleInput = [1, 2, 3, 4, 5, 6, 7];
+    const properResult = mapFn(exampleInput, (a) => a + 's');
+    expect(exampleInput.length).toEqual(properResult.length)
+  });
 
-describe('mapFn tests', () => {
-    test('Good arguments: array of strings', () => {
-        expect(mapFn(arrayOfStrings, (str) => str.toUpperCase())).toEqual(['ONE', 'TWO', 'THREE', 'FOUR'])
-    })
-    test('Good arguments: array of numbers', () => {
-        expect(mapFn(arrayOfNumbers, (num) => Math.pow(num, 2))).toEqual([1, 4, 9, 16])
-    })
-    test('Good arguments: empty array', () => {
-        expect(mapFn(emptyArray, (item) => item)).toStrictEqual([])
-    })
-    // test poniżej pokazuje błędy wyrzucane przez TypeScripta - porządane, nie można wrzucić innej wartości niż array do argumentu - OK
-    test('Bad arguments: string, with TS throws type error, without it gives bad results' , () => {
-        expect(mapFn(string, (str) => str.toUpperCase())).toEqual(["S", "O", "M", "E", "T", "I", "M", "E", "S", " ", "I", " ", "L", "I", "K", "E", " ", "S", "O", "M", "E", "T", "H", "I", "N", "G", " ", "E", "L", "S", "E"])
-        //expect(() => mapFn(string, (str) => str.toUpperCase())).toThrowError();
-    }) 
-}) 
+  test('when array is empty, should return empty array', () => {
+      const exampleInput = [];
+      const properResult = [];
+      expect(mapFn(exampleInput, (a) => a)).toEqual(properResult);
+  });
+       
+  test("when function callback is provided on every array element", () => {
+    const exampleInput = [1, 2, 3];
+    const mockCallback = jest.fn((a) => a + "s");
+    mapFn(exampleInput, (a) => mockCallback(a));
+    expect(mockCallback.mock.calls.length).toBe(3);
 
-describe('filterFn tests', () => {
-    test('Good arguments: array of objects', () => {
-        expect(filterFn(arrayOfObjects, element => element.name === "Chance")).toEqual(Array({name: "Chance"}));
-    })
-    test('function behavior', () => {
-        const mock = jest.fn();
+    expect(mockCallback.mock.calls[0][0]).toBe(1);
+    expect(mockCallback.mock.calls[1][0]).toBe(2);
+    expect(mockCallback.mock.calls[2][0]).toBe(3);
 
-        mock.mockReturnValueOnce(true).mockReturnValueOnce(true).mockReturnValue(false);
+    expect(mockCallback.mock.results[0].value).toBe('1s');
+    expect(mockCallback.mock.results[1].value).toBe('2s');
+    expect(mockCallback.mock.results[2].value).toBe('3s'); 
+  });
+});
 
-        const result = filterFn(arrayOfStrings, str => mock(str));
-        console.log(result);
-    })
-})
+//filterFn
 
-describe('everyFn tests', () => {
-    test('Good arguments: array of numbers', () => {
-        expect(everyFn(arrayOfNumbers, num => num > 0)).toBeTruthy();
-    })
+describe('filterFn function works properly', () => {
+    test('when returns array of values that comply with callback', () => {
+        const exampleInput = [23, 'word', [23]];
+        const properResult = ['word'];
+        expect(filterFn(exampleInput, element => typeof element === 'string')).toEqual(properResult);
+    });
 
-    test('everyFn behavior', () => {
-        const everyMock = jest.fn();
-        everyMock.mockReturnValueOnce(true).mockReturnValueOnce(true).mockReturnValueOnce(false).mockReturnValue(true);
+    test('when callback function returns true or false for given element', () => {
+        const exampleInput = [1,2,3,4,5];
 
-        const result = everyFn(arrayOfNumbers, num => everyMock(num));
-        console.log(result)
-    })
-})
+        const filterFnMockCallback = jest.fn();
+        filterFnMockCallback.mockReturnValueOnce(true).mockReturnValueOnce(true).mockReturnValueOnce(true).mockReturnValueOnce(false).mockReturnValueOnce(false);
 
-describe('reduceFn tests', () => {
-    // przy złych argumentach oraz przy pominięciu TypeScirpta funkcja nie działa - nie powinna działać
-    test('Bad arguments', () => {
-        expect(reduceFn(numbers, (acc, number) => acc = number + 3)).toBeUndefined()
-    })
+        const properResult = [1,2,3];
+        expect(filterFn(exampleInput, element => filterFnMockCallback(element))).toEqual(properResult);
+    });
 
-    test('reduceFn behavior', () => {
-        const reduceMock = jest.fn();
+    test('when array is empty, should return empty array', () => {
+        const exampleInput = [];
+        const properResult = [];
+        expect(filterFn(exampleInput, element => element)).toEqual(properResult);
+    });
+});
 
-        reduceMock.mockReturnValueOnce(1).mockReturnValueOnce(3).mockReturnValueOnce(6).mockReturnValueOnce(10);
+//everyFn
 
-        const result = reduceFn(arrayOfNumbers, (acc, num) => acc = reduceMock(num), 0);
-        console.log(result)
-        expect(reduceMock.mock.calls.length).toBe(4);
-        expect(reduceMock.mock.results[0].value).toBe(1);
-        expect(reduceMock.mock.results[1].value).toBe(3);
-        expect(reduceMock.mock.results[2].value).toBe(6);
-        expect(reduceMock.mock.results[3].value).toBe(10);
-    })
-})
+describe('everyFn function works properly', () => {
+  test('when will found false it will stop', () => {
+    const exampleInput = [1,2,3,4,5];
+    
+    const everyMock = jest.fn(el => el < 3);
+    everyFn(exampleInput, element => everyMock(element));
 
-describe('someFn tests', () => {
-    test('Good arguments: array of numbers', () => {
-        expect(someFn(arrayOfNumbers, num => num < 5)).toBeTruthy();
-    })
+    expect(everyMock.mock.calls.length).toBe(3);
 
-    test('someFn behavior', () => {
-        const someMock = jest.fn();
-        someMock.mockReturnValueOnce(false).mockReturnValueOnce(true).mockReturnValueOnce(false).mockReturnValue(true);
+    expect(everyMock.mock.results[0].value).toBe(true);
+    expect(everyMock.mock.results[1].value).toBe(true);
+    expect(everyMock.mock.results[2].value).toBe(false);
+  });
+  
+  test('when would not found false it will return true', () => {
+    const exampleInput = [1,2,3,4,5];
 
-        const result = someFn(arrayOfNumbers, num => someMock(num));
-        console.log(result)
-    })
-})
+    expect(everyFn(exampleInput, element => element <= 5)).toBeTruthy();
+  });
+});
 
-describe('reduceRightFn tests', () => {
-    test('Good arguments', () => {
-        expect(reduceRightFn(arrayOfNumbers, (acc, number) => acc += number + 3, 0)).toEqual(22)
-    })
+//reduceFn
 
-    test('reduceRightFn behavior', () => {
-        const reduceRightMock = jest.fn((acc, curr) => acc += curr);
+describe('reduceFn function works properly', () => {
+  test('when it reduce array to a single output value', () => {
+    const exampleInput = [1,2,3,4,5];
+    const properResult = 15;
 
-        reduceRightMock.mockReturnValueOnce(4).mockReturnValueOnce(7).mockReturnValueOnce(9).mockReturnValueOnce(10);
+    expect(reduceFn(exampleInput, (acc, curr) => acc + curr)).toBe(properResult);
+  });
 
-        const result = reduceRightFn(arrayOfNumbers, (acc, num) => reduceRightMock(acc, num), 0);
-        console.log(result)
-        expect(reduceRightMock.mock.calls.length).toBe(4);
-        expect(reduceRightMock.mock.results[0].value).toBe(4);
-        expect(reduceRightMock.mock.results[1].value).toBe(7);
-        expect(reduceRightMock.mock.results[2].value).toBe(9);
-        expect(reduceRightMock.mock.results[3].value).toBe(10);
-    })
-})
+  test('when initial value is set than previous value will equal initial value and current value will equal 1st value of an array', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    const initialValue = 0
+    const reducePrevValue = initialValue;
+    const reduceCurrValue = 1;
+
+    const reduceMock = jest.fn((acc, curr) => acc+curr);
+
+    reduceFn(exampleInput, (acc, curr) => reduceMock(acc, curr), initialValue);
+    expect(reduceMock.mock.calls[0][0]).toBe(reducePrevValue);
+    expect(reduceMock.mock.calls[0][1]).toBe(reduceCurrValue);
+
+  });
+
+  test('when initial value is not set than previous vale will equal 1st value of an array and current value will equal 2nd value of an array', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    const reducePrevValue = 1;
+    const reduceCurrValue = 2;
+
+    const reduceMock = jest.fn((acc, curr) => acc+curr);
+
+    reduceFn(exampleInput, (acc, curr) => reduceMock(acc, curr));
+    expect(reduceMock.mock.calls[0][0]).toBe(reducePrevValue);
+    expect(reduceMock.mock.calls[0][1]).toBe(reduceCurrValue);
+  });
+});
+
+describe('redcueFn handles properly errors', () => {
+  test('when array is empty it should throw type error', () => {
+    const exampleInput = [];
+
+    () => expect(reduceFn(exampleInput, (acc, curr) => acc)).toThrowError('Array is empty.');
+  });
+});
+
+//reduceRightFn
+
+describe('reduceRightFn function works properly', () => {
+  test('when initial value is set than previous value will equal initial value and current value will equal last value of an array', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    const initialValue = 0;
+    const reducePrevValue = initialValue;
+    const reduceCurrValue = 5;
+
+    const reduceRightMock = jest.fn((acc, curr) => acc+curr);
+
+    reduceRightFn(exampleInput, (acc, curr) => reduceRightMock(acc, curr), initialValue);
+    expect(reduceRightMock.mock.calls[0][0]).toBe(reducePrevValue);
+    expect(reduceRightMock.mock.calls[0][1]).toBe(reduceCurrValue);
+  });
+
+  test('when initial value is not set than previous vale will equal last value of an array and current value will equal before last value of an array', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    const reducePrevValue = 5;
+    const reduceCurrValue = 4;
+
+    const reduceRightMock = jest.fn((acc, curr) => acc+curr);
+
+    reduceRightFn(exampleInput, (acc, curr) => reduceRightMock(acc, curr));
+    expect(reduceRightMock.mock.calls[0][0]).toBe(reducePrevValue);
+    expect(reduceRightMock.mock.calls[0][1]).toBe(reduceCurrValue);
+  });
+});
+
+//someFn
+
+describe('someFn function works properly', () => {
+  test('when will found true it will stop', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    const someMock = jest.fn(el => el > 3);
+    someFn(exampleInput, element => someMock(element));
+
+    expect(someMock.mock.calls.length).toBe(4);
+
+    expect(someMock.mock.results[0].value).toBe(false);
+    expect(someMock.mock.results[1].value).toBe(false);
+    expect(someMock.mock.results[2].value).toBe(false);
+    expect(someMock.mock.results[3].value).toBe(true);
+  });
+
+  test('when would not found true it will return false', () => {
+    const exampleInput = [1,2,3,4,5];
+
+    expect(someFn(exampleInput, element => element > 5)).toBeFalsy();
+  });
+});

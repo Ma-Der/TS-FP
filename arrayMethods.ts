@@ -1,15 +1,13 @@
-type MapCallback<T> = (currentEl: T, i: number, array: T[]) => T
+type MapCallback<T, U> = (currentEl: T, i: number, array: T[]) => U;
 // mapFn
-export function mapFn<T>(arr: T[], callback: MapCallback<T>): T[] {
-    
-      const newArray: T[] = [];
-      for (let i = 0; i < arr.length; i++) {
-        let newElement: T = callback(arr[i], i, arr);
-        newArray.push(newElement);
-      }
-      return newArray;
-  }
-
+export function mapFn<T, U>(arr: T[], callback: MapCallback<T, U>): U[] {
+ const newArray: U[] = [];
+ for (let i = 0; i < arr.length; i++) {
+  let newElement: U = callback(arr[i], i, arr);
+  newArray.push(newElement);
+ }
+ return newArray;
+}
   //console.log(`mapFn: ${mapFn([7, 8, 9, 10, 12, 34, 2], a => a - 2)}`);
   
   // filterFn
@@ -52,7 +50,7 @@ type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
   
         prevVal = initial;
   
-        if (arr.length == 0) {
+        if (arr.length === 0) {
           return prevVal;
         }
   
@@ -63,7 +61,7 @@ type ReduceCallback<T> = ( prevVal: T, currentVal: T, i: number, arr: T[]) => T;
   
       } else {
   
-        if (arr.length == 0) {
+        if (arr.length === 0) {
           throw TypeError('Array is empty.');
         }
   

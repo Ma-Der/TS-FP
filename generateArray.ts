@@ -2,7 +2,8 @@ export function generateArrayWithRandomNumbers(howManyNumbers: number = 10, min:
 
     const argumentsMultiply = howManyNumbers * min * max;
     if (isNaN(argumentsMultiply)) throw new Error("All arguments must be numbers.");
-  
+    if(!Number.isInteger(min)) throw new Error("Min value must be an integer.");
+    if(!Number.isInteger(max)) throw new Error("Max value must be an integer.");
     if(!(howManyNumbers > 0)) throw new Error("1st parameter must be more than zero.");
     if(!(min < max)) {
       let temp: null | number = null;
@@ -29,4 +30,4 @@ export function generateArrayOfArrays(howManyArrays: number = 10, howManyNumbers
 //console.log(`generateArrayWithRandomNumbers: ${generateArrayWithRandomNumbers(5, 5, 100)}`);
 //console.log(`generateArrayOfArrays: ${generateArrayOfArrays(2, 5, 5, 100)}`);
 
-console.log(generateArrayOfArrays(2, 2, 1, 1))
+//console.log(generateArrayOfArrays(5, 5, 2.7, 1))

@@ -7,7 +7,7 @@ interface Settings {
   entriesOnPage: number;
 }
 
-function paginateArray(dataEntries: string[], settings: Settings): string[] {
+export function paginateArray(dataEntries: string[], settings: Settings): string[] {
   
     if(dataEntries.length === 0) throw new Error("Array is empty, nothing to paginate.");
    
@@ -30,4 +30,4 @@ function paginateArray(dataEntries: string[], settings: Settings): string[] {
   }
   
 const settings = { entriesOnPage: 4, paginateArrayIdx: 5 };
-console.log(paginateArray(dataPagination, settings));
+//console.log(paginateArray(dataPagination, settings));

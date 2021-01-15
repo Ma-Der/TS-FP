@@ -1,27 +1,40 @@
-import { filterWith } from '../filterWith';
+import { filterWith, data } from '../filterWith';
 
-// goodArguments:
-    const arrayOfStrings = ["one", "two", "three", "four"]
-    const arrayOfNumbers = [1,2, 3, 4, 234, 23]
-    const arrayOfObjects = [{name: "Bob"}, {name: "Kelly"}, {name: "Chance"}, {name: "George"}]
-    const arrayOfBooleans = [true, true, false, true, false, false]
-    const emptyArray = [];
-// badArguments: 
-    const string = "sometimes I like something else"
-    const numbers = 34
-    const object = {name: "Cindy", surname: "Dunno"}
-    const boolean = true
+describe('filterWith function works properly', () => {
+    test('when search object through nested objects', () => {
+        const properResult1 = [data[4]];
+        const properResult2 = [data[0]];
+        expect(filterWith(data, 'Acevedo')).toEqual(properResult1);
+        expect(filterWith(data, 'excepteur')).toEqual(properResult2);
+    });
 
-describe('filterWith tests', () => {
-    it('Good arguments', () => {
-        expect(filterWith(arrayOfStrings, 'one')).toEqual(['one']);
-        expect(filterWith(arrayOfObjects, 'Kelly')).toEqual([{name: 'Kelly'}]);
-    })
-    it('Searched word is to short, less than 3', () => {
-        expect(filterWith(arrayOfStrings, 'on')).toEqual([]);
-    })
-    it('Single digit number should not be searched', () => {
-        expect(filterWith(arrayOfNumbers, 2)).toEqual([]);
-        console.log("It's []");
-    })
+    test('when searches object with numbers', () => {
+        const properResult = [data[1], data[4]];
+        expect(filterWith(data, 984)).toEqual(properResult);
+    });
+
+    test('when function is case insensitive', () => {
+        const properResult = [data[4]];
+
+        expect(filterWith(data, 'acevedo')).toEqual(properResult);
+        expect(filterWith(data, 'aCevedo')).toEqual(properResult);
+        expect(filterWith(data, 'acEvedo')).toEqual(properResult);
+        expect(filterWith(data, 'aceVedo')).toEqual(properResult);
+        expect(filterWith(data, 'acevEdo')).toEqual(properResult);
+        expect(filterWith(data, 'aceveDo')).toEqual(properResult);
+        expect(filterWith(data, 'acevedO')).toEqual(properResult);
+        expect(filterWith(data, 'ACEVEDO')).toEqual(properResult);
+    });
+
+    test('when returns empty array when searched phrase has less than 3 digits', () => {
+        const properResult = [];
+        expect(filterWith(data, 23)).toEqual(properResult);
+    });
+});
+
+describe('filterWith function properly handles error', () => {
+    test('when input array is empty', () => {
+        const exampleInput = [];
+        () => expect(filterWith(exampleInput, 'something')).toThrowError('There is nothing too search. Array is empty.');
+    });
 })

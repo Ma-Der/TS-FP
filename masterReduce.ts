@@ -1,8 +1,8 @@
-type MapCallback<T> = (currentEl: T, i: number, array: T[]) => T
+type MapCallback<T, U> = (currentEl: T, i: number, array: T[]) => U
 
-export function mapFnR<T>(array: T[], callback: MapCallback<T>): T[]  {
+export function mapFnR<T, U>(array: T[], callback: MapCallback<T, U>): U[]  {
   
-    return array.reduce((newArray: T[], element, index, arr) => {
+    return array.reduce((newArray: U[], element, index, arr) => {
         return [...newArray, callback(element, index, arr)];
     }, []);
 }
